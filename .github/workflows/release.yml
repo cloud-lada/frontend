@@ -55,3 +55,23 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+
+      - name: Bundle manifests
+        run: make kustomize TAG=${GITHUB_REF#refs/tags/}
+
+      - name: Create archive
+        run: make zip
+
+      - name: Add manifests to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ github.token }}
+          file: deploy.yaml
+          tag: ${{ github.ref }}
+
+      - name: Add build to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ github.token }}
+          file: frontend.zip
+          tag: ${{ github.ref }}
