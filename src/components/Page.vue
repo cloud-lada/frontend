@@ -35,7 +35,6 @@ export default class Page extends Vue {}
 }
 
 .content {
-  padding: 1rem 20rem;
-  margin: auto;
+  padding: 1rem 10%;
 }
 </style>
