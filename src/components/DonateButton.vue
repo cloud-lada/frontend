@@ -2,7 +2,7 @@
   <Button
     size="large"
     type="primary"
-    href="https://www.gofundme.com/manage/dave-mick-matt-do-mongol-rally-2023"
+    href="https://gofund.me/d7217e5e"
     target="_blank"
     danger
   >
