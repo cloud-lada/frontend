@@ -39,6 +39,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ github.token }}
 
+      - name: Set module version
+        run: yarn version --new-version ${GITHUB_REF#refs/tags/v}
+
       - name: Bundle JavaScript
         run: yarn build
 
