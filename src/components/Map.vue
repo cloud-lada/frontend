@@ -5,21 +5,36 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 import leaflet from "leaflet";
+import { HTTPClient } from "@/lib/http";
+import { LocationClient } from "@/lib/location";
 
 export default class Map extends Vue {
   map!: leaflet.Map;
   circle!: leaflet.Circle;
+  client!: LocationClient;
+  intervalId!: number;
 
-  mounted(): void {
-    const center: leaflet.LatLngExpression = [51.505, -0.09];
-    const zoom = 13;
-
-    this.createMap(center, zoom);
-    this.createTileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-    this.createCircle(center);
+  beforeMount(): void {
+    const http = new HTTPClient();
+    this.client = new LocationClient(http);
   }
 
-  createMap(center: leaflet.LatLngExpression, zoom: number): void {
+  async mounted(): Promise<void> {
+    const interval = 10000;
+
+    this.setup();
+    await this.sync();
+
+    this.intervalId = setInterval(this.sync, interval);
+  }
+
+  unmounted(): void {
+    clearInterval(this.intervalId);
+  }
+
+  setup(): void {
+    const zoom = 13;
+    const initial: leaflet.LatLngExpression = [0, 0];
     const config = {
       zoomControl: false,
       scrollWheelZoom: false,
@@ -27,22 +42,29 @@ export default class Map extends Vue {
       dragging: false,
     };
 
-    this.map = leaflet.map("map", config).setView(center, zoom);
-  }
+    this.map = leaflet.map("map", config);
+    this.map.setView(initial, zoom);
 
-  createTileLayer(url: string): void {
-    const tileLayer = leaflet.tileLayer(url);
+    const tileLayer = leaflet.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    );
 
     tileLayer.addTo(this.map);
-  }
 
-  createCircle(location: leaflet.LatLngExpression): void {
-    this.circle = leaflet.circle(location, {
+    this.circle = leaflet.circle(initial, {
       radius: 1000,
       interactive: false,
     });
 
     this.circle.addTo(this.map);
+  }
+
+  async sync(): Promise<void> {
+    const { latitude, longitude } = await this.client.latest();
+    const location: leaflet.LatLngExpression = [latitude, longitude];
+
+    this.circle.setLatLng(location);
+    this.map.setView(location);
   }
 }
 </script>
