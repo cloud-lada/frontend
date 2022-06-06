@@ -1,5 +1,5 @@
 <template>
-  <Page title="Cloud Lada" :subtitle="`v${version}`">
+  <Page>
     <template #side>
       <DonateButton />
       <SourceCodeButton />
@@ -25,7 +25,6 @@
 import Page from "@/components/Page.vue";
 import { Options, Vue } from "vue-class-component";
 import { Card, BadgeRibbon } from "ant-design-vue";
-import { version } from "../../package.json";
 import SourceCodeButton from "@/components/SourceCodeButton.vue";
 import DonateButton from "@/components/DonateButton.vue";
 import LiveStatistics from "@/components/LiveStatistics.vue";
@@ -44,9 +43,7 @@ import Status from "@/components/Status.vue";
     BadgeRibbon,
   },
 })
-export default class Home extends Vue {
-  version: string = version;
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="css" scoped>

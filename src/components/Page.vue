@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <PageHeader :title="title" :ghost="false" :sub-title="subtitle">
+    <PageHeader title="Cloud Lada" :ghost="false" :sub-title="`v${version}`">
       <template #extra>
         <slot name="side" />
       </template>
@@ -14,17 +14,16 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { PageHeader } from "ant-design-vue";
+import { version } from "../../package.json";
 
 @Options({
   components: {
     PageHeader,
   },
-  props: {
-    title: { type: String, required: true },
-    subtitle: { type: String },
-  },
 })
-export default class Page extends Vue {}
+export default class Page extends Vue {
+  version: string = version;
+}
 </script>
 
 <style lang="css" scoped>
