@@ -6,8 +6,10 @@
     </template>
 
     <template #content>
+      <Status />
+
       <BadgeRibbon text="Live" color="red">
-        <Card size="small">
+        <Card size="small" class="separated">
           <LiveStatistics />
         </Card>
       </BadgeRibbon>
@@ -28,9 +30,11 @@ import SourceCodeButton from "@/components/SourceCodeButton.vue";
 import DonateButton from "@/components/DonateButton.vue";
 import LiveStatistics from "@/components/LiveStatistics.vue";
 import Map from "@/components/Map.vue";
+import Status from "@/components/Status.vue";
 
 @Options({
   components: {
+    Status,
     Map,
     LiveStatistics,
     DonateButton,
