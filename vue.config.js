@@ -3,6 +3,11 @@ module.exports = defineConfig({
   transpileDependencies: true,
   productionSourceMap: false,
   devServer: {
-    proxy: "https://lada.dsb.dev",
+    proxy: {
+      "^/api": {
+        target: "https://lada.dsb.dev",
+        ws: false,
+      },
+    },
   },
 });
