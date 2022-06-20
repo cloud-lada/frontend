@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { PageHeader } from "ant-design-vue";
-import { version } from "../../package.json";
+import packageInfo from "../../package.json";
 
 @Options({
   components: {
@@ -22,7 +22,7 @@ import { version } from "../../package.json";
   },
 })
 export default class Page extends Vue {
-  version: string = version;
+  version: string = packageInfo.version;
 }
 </script>
 

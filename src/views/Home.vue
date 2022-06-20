@@ -17,6 +17,10 @@
       <Card size="small" class="separated">
         <Map />
       </Card>
+
+      <Card size="small" class="separated">
+        <DailyCharts />
+      </Card>
     </template>
   </Page>
 </template>
@@ -30,9 +34,11 @@ import DonateButton from "@/components/DonateButton.vue";
 import LiveStatistics from "@/components/LiveStatistics.vue";
 import Map from "@/components/Map.vue";
 import Status from "@/components/Status.vue";
+import DailyCharts from "@/components/DailyCharts.vue";
 
 @Options({
   components: {
+    DailyCharts,
     Status,
     Map,
     LiveStatistics,
